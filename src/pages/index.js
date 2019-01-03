@@ -5,7 +5,8 @@ import axios from 'axios';
 const { Search } = Input;
 const Dragger = Upload.Dragger;
 
-const url = 'http://localhost:8080';
+const url = 'http://192.168.86.128:8888/';
+// const url = 'http://localhost:8080';
 
 
 class IndexPage extends React.Component {
@@ -38,7 +39,7 @@ class IndexPage extends React.Component {
     });
     axios.post(`${url}/parsing`, {
       sql: e,
-      lastName: 'Flintstone',
+      files: fileNames,
       key: this.state.key
     }).then(function (response) {
       console.log(response);
@@ -82,7 +83,7 @@ class IndexPage extends React.Component {
                 placeholder="Please enter the Sql"
                 enterButton="Query"
                 size="large"
-                defaultValue="select * from qs;"
+                defaultValue="select * from qs"
                 onSearch={this.onSearch}
               />
               <p style={{ marginTop: '5px' }}></p>
