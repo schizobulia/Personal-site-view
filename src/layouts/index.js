@@ -4,7 +4,7 @@ const { Header, Content, Footer } = Layout;
 
 function BasicLayout(props) {
   return (
-    <Layout>
+    <Layout style={{height: '100%'}}>
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
         <div className="logo" />
         <Menu
