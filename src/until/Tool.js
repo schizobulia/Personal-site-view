@@ -2,6 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 let Tools = null;
 let URL = "";
+let STATICPATH = "";
 
 class _Tools {
     isUrl(url) {
@@ -14,6 +15,14 @@ class _Tools {
     isIp(ip) {
         var pattern = /(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)/;
         return pattern.test(ip);
+    }
+
+
+    /**
+     * 获取静态资源文件路径
+     */
+    getStaticPath() {
+        return STATICPATH;
     }
 
     /**
@@ -218,12 +227,12 @@ class _Tools {
     time(e) {
         let date = new Date(e);
         let Y = date.getFullYear() + '-';
-        let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
         let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
         let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
         let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-        let s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()); 
-        return Y+M+D+h+m+s
+        let s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+        return Y + M + D + h + m + s
     }
 }
 

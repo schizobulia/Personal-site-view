@@ -3,10 +3,12 @@ import * as React from 'react';
 import { Upload, Icon, Input, Row, Col, Button, Tooltip, message, List, Spin } from 'antd';
 import axios from 'axios';
 import Tools from '../until/Tool';
+import { Link } from 'react-router-dom';
+import copy from 'copy-to-clipboard';
 const { Search, TextArea } = Input;
 const Dragger = Upload.Dragger;
 
-const url = 'http://192.168.86.128:8888/';
+const url = '';
 // const url = 'http://localhost:8080';
 
 
@@ -41,9 +43,12 @@ class IndexPage extends React.Component {
     const fileNames = this.state.jsons.map((ele) => {
       return ele.name;
     });
-
     if (!e || !this.state.key || fileNames.length === 0) {
       message.warning('请检查参数是否输入');
+      return;
+    }
+    if (this.validationFileSuffer(["a.json", 'a.csv'], '.json')) {
+      message.warning('请上传json文件');
       return;
     }
     this.setState({
@@ -82,6 +87,17 @@ class IndexPage extends React.Component {
     });
   }
 
+
+  validationFileSuffer(names, suffer) {
+    for (let index = 0; index < names.length; index++) {
+      const element = names[index];
+      if (element.slice(element.lastIndexOf('.'), element.length) !== suffer) {
+        return false;
+      };
+    }
+    return true;
+  }
+
   showMsgJson = (filePath) => {
     Tools.httpGetJson(filePath, (data) => {
       let text = '';
@@ -110,8 +126,9 @@ class IndexPage extends React.Component {
   /**
    * 在单击时将key复制到粘贴板中
    */
-  rememberKey = () => {
-
+  rememberKey = (event) => {
+    copy(event.target.innerText);
+    message.success('复制成功');
   }
 
   render() {
@@ -163,8 +180,10 @@ class IndexPage extends React.Component {
               </Dragger>
               <p style={{ marginTop: '5px' }}></p>
               <Tooltip title="Please remember it, This is the Key that needs to be used in the query.">
-                <Button onClick={this.rememberKey}>{this.state.key}</Button>
+                <Button onClick={this.rememberKey} ref={(buttondom) => this.buttondom = buttondom}>{this.state.key}</Button>
               </Tooltip>
+              <p></p>
+              <Link to="/Instructions" style={{ float: "right" }}>文档说明</Link>
             </Col>}
           </Row>
         </Spin>
