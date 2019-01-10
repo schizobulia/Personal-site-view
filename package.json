@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "copy-to-clipboard": "^3.0.8"
+    "copy-to-clipboard": "^3.0.8",
+    "react-syntax-highlighter": "^10.1.2"
   }
 }

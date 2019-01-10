@@ -8,8 +8,8 @@ import copy from 'copy-to-clipboard';
 const { Search, TextArea } = Input;
 const Dragger = Upload.Dragger;
 
-// const url = 'http://58.87.85.53:8002/personal-0.1';
-const url = 'http://localhost:8888';
+const url = 'http://58.87.85.53:8002/personal-0.1';
+// const url = 'http://localhost:8888';
 
 
 class IndexPage extends React.Component {
@@ -162,7 +162,7 @@ class IndexPage extends React.Component {
 
                 <p style={{ marginTop: '5px' }}></p>
                 <div style={{ position: 'relative' }}>
-                  <TextArea style={{ width: '70%', height: 300, position: 'absolute' }}
+                  <TextArea style={{ width: '70%', height: 200, position: 'absolute' }}
                     rows={4} value={this.state.msgJson} />
                   <List
                     header={<div>单击下载</div>}

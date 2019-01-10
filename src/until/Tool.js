@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { message } from 'antd';
 let Tools = null;
-// let URL = "http://58.87.85.53:8002/personal-0.1";
-let URL = "http://localhost:8888";
+let URL = "http://58.87.85.53:8002/personal-0.1";
+// let URL = "http://localhost:8888";
 let STATICPATH = "http://localhost:8888";
 
 class _Tools {
