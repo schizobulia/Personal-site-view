@@ -8,8 +8,8 @@ import copy from 'copy-to-clipboard';
 const { Search, TextArea } = Input;
 const Dragger = Upload.Dragger;
 
-const url = '';
-// const url = 'http://localhost:8080';
+// const url = 'http://58.87.85.53:8002/personal-0.1';
+const url = 'http://localhost:8888';
 
 
 class IndexPage extends React.Component {
@@ -47,8 +47,8 @@ class IndexPage extends React.Component {
       message.warning('请检查参数是否输入');
       return;
     }
-    if (this.validationFileSuffer(["a.json", 'a.csv'], '.json')) {
-      message.warning('请上传json文件');
+    if (!this.validationFileSuffer(["a.orc", 'a.json'], ['.json', '.csv', '.parquet', '.orc'])) {
+      message.warning('单次只能上传一种类型的文件,细节请查询文档!');
       return;
     }
     this.setState({
@@ -88,10 +88,15 @@ class IndexPage extends React.Component {
   }
 
 
-  validationFileSuffer(names, suffer) {
+  validationFileSuffer(names, suffers) {
+    let suf = names[0].slice(names[0].lastIndexOf('.'), names[0].length);
     for (let index = 0; index < names.length; index++) {
       const element = names[index];
-      if (element.slice(element.lastIndexOf('.'), element.length) !== suffer) {
+      const s = element.slice(element.lastIndexOf('.'), element.length);
+      if (suf !== s) {
+        return false;
+      }
+      if (!suffers.includes(s)) {
         return false;
       };
     }
@@ -135,7 +140,7 @@ class IndexPage extends React.Component {
     const props = {
       name: 'file',
       multiple: true,
-      accept: '.json',
+      accept: '.json,.csv,.parquet,.orc',
       action: `${url}/fileupload`,
       onChange: this.onFileChange,
       data: { data: this.state.key }
