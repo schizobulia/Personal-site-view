@@ -8,7 +8,7 @@ import copy from 'copy-to-clipboard';
 const { Search, TextArea } = Input;
 const Dragger = Upload.Dragger;
 
-const url = 'http://58.87.85.53:8002/personal-0.1';
+const url = 'http://www.jcbsb.com:8002/personal-0.1';
 // const url = 'http://localhost:8888';
 
 

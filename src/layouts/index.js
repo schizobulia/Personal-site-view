@@ -1,8 +1,9 @@
 import styles from './index.css';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Input } from 'antd';
 import React from 'react';
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
+const Search = Input.Search;
 const ROUTERPATH = ["Home", "Instructions", "About", "Apipage"];
 class BasicLayout extends React.Component {
 
@@ -56,7 +57,11 @@ class BasicLayout extends React.Component {
       })
     })
   }
-
+  /**
+   * 历史查询
+   */
+  historySearch = (value) => {
+  }
 
   render() {
     const props = this.props;
@@ -64,6 +69,12 @@ class BasicLayout extends React.Component {
       <Layout>
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
           <div className="logo" />
+          <Search
+            style={{position: 'absolute', width: '250px', right: '100px', top: '16px'}}
+            placeholder="query by key"
+            onSearch={this.historySearch}
+            enterButton
+          />
           <Menu
             theme="dark"
             mode="horizontal"
