@@ -8,9 +8,7 @@ import copy from 'copy-to-clipboard';
 const { Search, TextArea } = Input;
 const Dragger = Upload.Dragger;
 
-const url = 'http://www.jcbsb.com:8002/personal-0.1';
-// const url = 'http://localhost:8888';
-
+const url = Tools.getApiUrl();
 
 class IndexPage extends React.Component {
 
@@ -23,14 +21,12 @@ class IndexPage extends React.Component {
   }
 
   componentWillMount = () => {
-    axios.get(`${url}/createkey`, {})
-      .then((data) => {
-        this.setState({
-          key: data.data
-        })
-      }).catch((error) => {
-        console.log(error);
+    Tools.httpGet('createkey', ((data) => {
+      if (!data) { message.warning('异常'); return };
+      this.setState({
+        key: data.key
       })
+    }))
   }
 
 
@@ -47,7 +43,7 @@ class IndexPage extends React.Component {
       message.warning('请检查参数是否输入');
       return;
     }
-    if (!this.validationFileSuffer(["a.orc", 'a.json'], ['.json', '.csv', '.parquet', '.orc'])) {
+    if (!this.validationFileSuffer(fileNames, ['.json', '.csv', '.parquet', '.orc'])) {
       message.warning('单次只能上传一种类型的文件,细节请查询文档!');
       return;
     }

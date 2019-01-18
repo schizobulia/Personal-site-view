@@ -1,6 +1,8 @@
 import styles from './index.css';
-import { Layout, Menu, Input } from 'antd';
+import { Layout, Menu, Input, message, Modal } from 'antd';
 import React from 'react';
+import Tools from '../until/Tool';
+import ModalCom from '../component/ModalCom';
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
 const Search = Input.Search;
@@ -9,6 +11,10 @@ class BasicLayout extends React.Component {
 
   state = {
     key: "1",
+    visible: false,
+    sqldir: [],
+    staticPath: "",
+    sqlPath: []
   }
 
   constructor(props) {
@@ -61,6 +67,16 @@ class BasicLayout extends React.Component {
    * 历史查询
    */
   historySearch = (value) => {
+    if (!value) { message.warning('输入不能为空'); return };
+    Tools.httpGet(`historysql?key=${value}`, ((data) => {
+      if (!data) { message.warning('无数据'); return };
+      this.setState({
+        visible: true,
+        sqldir: data.sqls,
+        staticPath: data.static,
+        sqlPath: data.sqlpath
+      })
+    }))
   }
 
   render() {
@@ -70,7 +86,7 @@ class BasicLayout extends React.Component {
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
           <div className="logo" />
           <Search
-            style={{position: 'absolute', width: '250px', right: '100px', top: '16px'}}
+            style={{ position: 'absolute', width: '250px', right: '100px', top: '16px' }}
             placeholder="query by key"
             onSearch={this.historySearch}
             enterButton
@@ -97,6 +113,9 @@ class BasicLayout extends React.Component {
           <div style={{ background: '#fff', padding: 24, height: 'auto' }}>
             {props.children}
           </div>
+          <ModalCom visible={this.state.visible} sqldir={this.state.sqldir} staticPath={this.state.staticPath}
+            sqlPath={this.state.sqlPath}
+          />
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           Personal-site

@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { message } from 'antd';
 let Tools = null;
-let URL = "http://www.jcbsb.com:8002/personal-0.1";
-// let URL = "http://localhost:8888";
-let STATICPATH = "http://localhost:8888";
+let URL = "http://192.168.88.23:8888/";
+let STATICPATH = "http://192.168.88.23:8888/";
 
 class _Tools {
     isUrl(url) {
@@ -18,6 +17,9 @@ class _Tools {
         return pattern.test(ip);
     }
 
+    getApiUrl() {
+        return URL;
+    }
 
     /**
      * 获取静态资源文件路径
@@ -34,18 +36,11 @@ class _Tools {
     httpGet(url, callback) {
         axios.get(URL + url, {
         }).then((data) => {
-            if (data.data.status == 1) {
+            if (data.status !== 200) { message.error('服务器异常'); return }
+            if (data.data.status === 1) {
                 callback(data.data)
-            } else {
-                if (data.data.error) {
-                    message.warning(data.data.error);
-                } else {
-                    message.warning('网络异常,将重新刷新.');
-                    let t = setTimeout(() => {
-                        window.location.reload();
-                        clearTimeout(t);
-                    }, 1000);
-                }
+            } else if (data.data.status === 0) {
+                callback(null);
             }
         }).catch((err) => {
             callback(false);

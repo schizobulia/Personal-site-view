@@ -26,6 +26,10 @@ class InstructionsPage extends React.Component {
             desc: 'Mysql'
         }, {
             key: '3',
+            name: '数据格式',
+            desc: '请保证单次上传多个文件时保证数据格式一致'
+        }, {
+            key: '4',
             name: '版本',
             desc: 'v1.0'
         }];
