@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Collapse, List } from 'antd';
 import Tool from '../until/Tool';
+import _Event from '../until/Event';
 const Panel = Collapse.Panel;
 export default class ModalCom extends React.Component {
 
@@ -8,11 +9,19 @@ export default class ModalCom extends React.Component {
         super(props);
     }
 
-    state = { visible: this.props.visible || false, sqldir: this.props.sqldir || [] }
+    state = { visible: false, sqldir: this.props.sqldir || [] }
 
     showModal = () => {
         this.setState({
             visible: true,
+        });
+    }
+
+    componentWillMount = () => {
+        new _Event().on('hisotry', (data) => {
+            this.setState({
+                visible: data
+            })
         });
     }
 
@@ -22,7 +31,6 @@ export default class ModalCom extends React.Component {
 
     componentWillReceiveProps = (nextProps, nextState) => {
         this.setState({
-            visible: nextProps.visible,
             sqldir: nextProps.sqldir,
             staticPath: nextProps.staticPath,
             sqlPath: nextProps.sqlPath
@@ -39,10 +47,6 @@ export default class ModalCom extends React.Component {
         this.setState({
             visible: false,
         });
-    }
-
-    onChange = (key) => {
-        // let sql = this.state.sqldir[key[]];
     }
 
     render() {
@@ -69,7 +73,7 @@ export default class ModalCom extends React.Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <Collapse onChange={this.onChange} >
+                    <Collapse>
                         {com}
                     </Collapse>
                 </Modal>

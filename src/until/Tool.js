@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { message } from 'antd';
 let Tools = null;
-let URL = "http://192.168.88.23:8888/";
-let STATICPATH = "http://192.168.88.23:8888/";
+let URL = "http://www.jcbsb.com:8002/personal-0.1/";
+let STATICPATH = "http://www.jcbsb.com:8002/personal-0.1/";
 
 class _Tools {
     isUrl(url) {

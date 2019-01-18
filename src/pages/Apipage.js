@@ -22,6 +22,11 @@ class ApiPage extends React.Component {
                 content: `/**node示例**/\nlet FormData = require('form-data');\nlet fs = require('fs');\nlet http = require('http');\nlet form = new FormData();\nform.append('data','1547176310885-816408');\nform.append('file',fs.createReadStream(__dirname + '/a.json'));\nlet opt = {\n\0\0\0\0method:'POST',\n\0\0\0\0host:'www.jcbsb.com',\n\0\0\0\0port:'8002',\n\0\0\0\0path:'/personal-0.1/fileupload',\n\0\0\0\0headers:form.getHeaders()\n};\nlet request = http.request(opt);\nform.pipe(request);\nrequest.on('response',function(res){\n\0\0\0\0if(res.statusCode===200){\n\tlet chuck="";\n\tres.on('data',(data)=>{\n\t\0\0\0\0chuck += data;\n\t});\n\tres.on('end',()=>{\n\t\0\0\0\0console.log(chuck)\n\t});\n\0\0\0\0}\n});`,
                 key: 3,
             },
+            {
+                title: '历史查询',
+                content: `/**node示例**/\nconst http = require('http');\nhttp.get("http://www.jcbsb.com:8002/personal-0.1/historysql?key=MTU0Nzc5NzA1OTEzNi03MTI2MQ==", (res) => {\n\0\0\0\0let data='';\n\0\0\0\0res.on('data',(chunk)=>{\n\tdata += chunk;\n\0\0\0\0});\n\0\0\0\0res.on('end',(err)=>{\n\tconst result=JSON.parse(data);\n\t//console.log(result.sqls);//文件名称对应的sql\n\t//console.log(result.static);//静态资源路径\n\t//console.log(result.sqlpath);//sql目录名称\n\t//完整路径:静态资源路径+sql目录名称+文件名称\n\0\0\0\0});\n});`,
+                key: 4,
+            },
         ];
         return (
             <List

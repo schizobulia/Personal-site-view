@@ -3,6 +3,7 @@ import { Layout, Menu, Input, message, Modal } from 'antd';
 import React from 'react';
 import Tools from '../until/Tool';
 import ModalCom from '../component/ModalCom';
+import _Event from '../until/Event';
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
 const Search = Input.Search;
@@ -11,7 +12,6 @@ class BasicLayout extends React.Component {
 
   state = {
     key: "1",
-    visible: false,
     sqldir: [],
     staticPath: "",
     sqlPath: []
@@ -71,12 +71,12 @@ class BasicLayout extends React.Component {
     Tools.httpGet(`historysql?key=${value}`, ((data) => {
       if (!data) { message.warning('无数据'); return };
       this.setState({
-        visible: true,
         sqldir: data.sqls,
         staticPath: data.static,
         sqlPath: data.sqlpath
-      })
-    }))
+      });
+      new _Event().emit('hisotry', true);
+    }));
   }
 
   render() {
@@ -113,7 +113,7 @@ class BasicLayout extends React.Component {
           <div style={{ background: '#fff', padding: 24, height: 'auto' }}>
             {props.children}
           </div>
-          <ModalCom visible={this.state.visible} sqldir={this.state.sqldir} staticPath={this.state.staticPath}
+          <ModalCom  sqldir={this.state.sqldir} staticPath={this.state.staticPath}
             sqlPath={this.state.sqlPath}
           />
         </Content>
